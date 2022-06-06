@@ -9,9 +9,12 @@ export default function Header() {
             <img src={require('../assets/logo.png')} className="ui small image" alt="logo" />
             </Link>
             <div className="right menu">
-                <Link to="/" className="item">
+                <div style={{ margin: "auto" }}>
+                <Link to="/" className="ui primary basic button">
                     All Streams
                 </Link>
+
+                </div>
                 <GoogleAuth />
             </div>
         </div>
