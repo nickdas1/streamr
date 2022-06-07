@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { fetchStreams } from "../../actions";
 
-class StreamList extends React.Component {
-    componentDidMount() {
-        this.props.fetchStreams();
-    }
+function StreamList(props) {
+    const dispatch = useDispatch();
+    const { id } = useParams();
 
-    renderAdmin(stream) {
-        if (stream.userId === this.props.currentUserId) {
+    useEffect(() => {
+        dispatch(fetchStreams());
+    }, [id, dispatch]);
+
+    const renderAdmin = (stream) => {
+        if (stream.userId === props.currentUserId) {
             return (
                 <div className="right floated content">
                     <Link
@@ -18,31 +22,36 @@ class StreamList extends React.Component {
                     >
                         Edit
                     </Link>
-                    <Link to={`/streams/delete/${stream.id}`} className="ui button negative">Delete</Link>
+                    <Link
+                        to={`/streams/delete/${stream.id}`}
+                        className="ui button negative"
+                    >
+                        Delete
+                    </Link>
                 </div>
             );
         }
-    }
+    };
 
-    renderList() {
-        return this.props.streams.map((stream) => {
+    const renderList = () => {
+        return props.streams.map((stream) => {
             return (
                 <div className="item" key={stream.id}>
-                    {this.renderAdmin(stream)}
+                    {renderAdmin(stream)}
                     <i className="large middle aligned icon play circle outline" />
                     <div className="content">
                         <Link to={`/streams/${stream.id}`} className="header">
-                        {stream.title}
+                            {stream.title}
                         </Link>
                         <div className="description">{stream.description}</div>
                     </div>
                 </div>
             );
         });
-    }
+    };
 
-    renderCreate() {
-        if (this.props.isSignedIn) {
+    const renderCreate = () => {
+        if (props.isSignedIn) {
             return (
                 <div style={{ textAlign: "right" }}>
                     <Link to="/streams/new" className="ui button positive">
@@ -51,17 +60,15 @@ class StreamList extends React.Component {
                 </div>
             );
         }
-    }
+    };
 
-    render() {
-        return (
-            <div>
-                <h2>Streams</h2>
-                <div className="ui celled list">{this.renderList()}</div>
-                {this.renderCreate()}
-            </div>
-        );
-    }
+    return (
+        <div>
+            <h2>Streams</h2>
+            <div className="ui celled list">{renderList()}</div>
+            {renderCreate()}
+        </div>
+    );
 }
 
 const mapStateToProps = (state) => {
