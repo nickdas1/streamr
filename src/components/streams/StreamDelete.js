@@ -23,7 +23,9 @@ export default function StreamDelete() {
             <button onClick={() => onDelete(id)} className="ui negative button">
                 Delete
             </button>
-            <Link to="/" className="ui button">Cancel</Link>
+            <Link to="/" className="ui button">
+                Cancel
+            </Link>
         </>
     );
 
@@ -35,7 +37,7 @@ export default function StreamDelete() {
         return (
             <div>
                 <span>
-                    Are you sure you want to delete the followind stream:{" "}
+                    Are you sure you want to delete the following stream:
                 </span>
                 <b>{stream.title}</b>
             </div>
