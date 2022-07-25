@@ -37,7 +37,7 @@ export default function StreamDelete() {
         return (
             <div>
                 <span>
-                    Are you sure you want to delete the following stream:
+                    Are you sure you want to delete the following stream:{" "}
                 </span>
                 <b>{stream.title}</b>
             </div>
